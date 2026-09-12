@@ -1,0 +1,26 @@
+name: Auto Unzip File
+on:
+  push:
+    paths:
+      - 'macga.zip' # Berjalan otomatis saat file zip terdeteksi
+
+jobs:
+  unzip-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract zip file
+        run: |
+          unzip -o macga.zip
+          rm macga.zip # Menghapus file zip agar repositori bersih
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
+          git add .
+          git commit -m "Auto extract macga.zip via GitHub Actions" || exit 0
+          git push
+          

@@ -2,7 +2,8 @@ name: Auto Unzip File
 on:
   push:
     paths:
-      - 'macga.zip' # Berjalan otomatis saat file zip terdeteksi
+      - 'macga.zip'
+  workflow_dispatch: # Baris ini yang memunculkan tombol jalankan manual
 
 jobs:
   unzip-file:
@@ -14,7 +15,7 @@ jobs:
       - name: Extract zip file
         run: |
           unzip -o macga.zip
-          rm macga.zip # Menghapus file zip agar repositori bersih
+          rm macga.zip
 
       - name: Commit and Push Changes
         run: |
@@ -23,4 +24,3 @@ jobs:
           git add .
           git commit -m "Auto extract macga.zip via GitHub Actions" || exit 0
           git push
-          
